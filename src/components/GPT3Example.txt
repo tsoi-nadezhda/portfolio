@@ -1,0 +1,52 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
+const GPT3Example = () => {
+  const [inputText, setInputText] = useState('');
+  const [outputText, setOutputText] = useState('');
+  const apiKey = 'XsFTThu4IJBsTCBA6WVMT3BlbkFJ0UZ3ZEWj2n0DLTbLs9jC'; // Replace with your actual API key
+
+  const handleInputChange = (event) => {
+    setInputText(event.target.value);
+  };
+
+  const generateResponse = async () => {
+    try {
+      const response = await axios.post(
+        'https://api.openai.com/v1/engines/davinci/completions',
+        {
+          prompt: inputText,
+          max_tokens: 150,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+          },
+        }
+      );
+
+      setOutputText(response.data.choices[0].text);
+    } catch (error) {
+      console.error('Error generating response:', error.message);
+    }
+  };
+
+  return (
+    <div>
+      <textarea
+        placeholder="Type your prompt here..."
+        value={inputText}
+        onChange={handleInputChange}
+      />
+      <button onClick={generateResponse}>Generate Response</button>
+      <div>
+        <strong>Output:</strong>
+        <p>{outputText}</p>
+      </div>
+    </div>
+  );
+};
+
+export default GPT3Example;
+
