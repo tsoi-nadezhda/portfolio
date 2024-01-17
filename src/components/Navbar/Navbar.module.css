@@ -1,12 +1,17 @@
 .nav {
     grid-area: n;
-    background-color: burlywood;
+    background-color: #ECF0F1;
 }
 
-.item {
-    color: white
+.item a{
+    color: #252F39;
+    text-decoration: none;
+    background-color: white;
+    border-radius: 15%;
+    size: 2rem;
+    margin-left: 15px;
 }
 
-.item.active {
-    color: gold;
+.item .activeLink{
+    color: #94969d;
 }
