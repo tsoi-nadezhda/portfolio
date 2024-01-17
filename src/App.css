@@ -6,7 +6,10 @@
     grid-template-columns: 2fr 10fr;
     /* grid-gap: 10px; */
 }
-
+.app-wrapper-content{
+    grid-area: c;
+    background-color: #ECF0F1;
+}
 .content img {
     margin: 0;
     width: 65em;
