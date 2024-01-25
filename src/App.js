@@ -9,6 +9,8 @@ import Dialogs from './components/Dialogs/Dialogs';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
+import MySidebar from './components/Sidebar/MySidebar';
+
 // const WrappedDialogs = function(props) {
 //     // Конструкция "{...props}" нужна, чтобы не потерять
 //     // параметры, переданные от компонента Route
@@ -20,21 +22,19 @@ const App = (props) => {
     <BrowserRouter>
         <div className = "app-wrapper" >
             <Header />
-            <Navbar />
+            <Navbar friendsData={props.state.sidebar.friendsData} />
             <div className = "app-wrapper-content">
                     <Routes>
-                    {/* render={()=>< Profile postData={props.postData} />} */}
-                    {/* component={() => <Profile postData={props.postData} />} */}
-                    {/* component={() => <Profile postData={props.postData} /> */}
-                    {console.log(props.postData)}
-                    
-                        <Route path = "/profile" element={<Profile postData={props.postData}/>} /> 
-                        <Route path = "/dialogs/*" element = { < Dialogs  dialogsData={props.dialogsData} messagesData={props.messagesData}/> }/> 
+                    {/* {console.log(props.state.sidebar.friendsData)} */}
+                        <Route path = "/profile" element={<Profile postData={props.state.profilePage.postData} addPost={props.addPost}/>} /> 
+                        <Route path = "/dialogs/*" element = { < Dialogs  dialogsData={props.state.messagesPage.dialogsData} messagesData={props.state.messagesPage.messagesData} me={props.state.messagesPage.me}/> }/> 
                         <Route path = "/news" element = { < News /> }/> 
                         <Route path = "/music" element = { < Music /> }/> 
                         <Route path = "/settings" element = { < Settings /> }/> 
+                        <Route path = "/friends/*" element = { < MySidebar friendsData={props.state.sidebar.friendsData}/> }/> 
                     </Routes> 
             </div> 
+            
         </div>
         </BrowserRouter> 
 

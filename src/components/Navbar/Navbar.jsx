@@ -1,8 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import s from "./Navbar.module.css"
+import MySidebar from '../Sidebar/MySidebar';
 // console.log(s)
-const Navbar = () => {
+const Navbar = (props) => {
+  let friendsData = props.friendsData.slice(0, 3).map(f => (<div key={f.id}><a>{f.name}</a><img className={s.avatar} src={f.img} /></div>))
   return <nav className={s.nav}>
     <div className={s.item}>
       <NavLink className={({ isActive }) => isActive ? s.activeLink : 'none'} to="/profile">Profile</NavLink>
@@ -19,6 +21,14 @@ const Navbar = () => {
     <div className={s.item}>
       <NavLink className={({ isActive }) => isActive ? s.activeLink : 'none'} to="/settings">Settings</NavLink>
     </div>
+    <div className={s.sidebar}>
+      <NavLink className={s.friends} to="/friends">Friends</NavLink>
+      <div className={s.friendItems}>
+        {friendsData}
+      </div>
+    </div>
+
+
   </nav>
 }
 export default Navbar;

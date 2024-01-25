@@ -1,4 +1,5 @@
 .nav {
+    padding: 10px;
     grid-area: n;
     background-color: #ECF0F1;
 }
@@ -14,4 +15,23 @@
 
 .item .activeLink{
     color: #94969d;
+}
+.sidebar{
+    margin-top: 30px;
+}
+.friends{
+    font-weight: 500;
+    font-size: xx-large;
+    text-decoration: none;
+    color: #9575AE;
+    margin-left: 35px;
+}
+.friendItems{
+    display: flex;
+    margin-left: 5px;
+}
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius: 50%;
 }

@@ -2,9 +2,10 @@ import React from 'react'
 import s from "../Dialogs.module.css"
 import { NavLink } from 'react-router-dom'
 const DialogItem = (props) => {
+    console.log(props)
     return (
         <div className={s.dialog}>
-            <NavLink to={props.id}>{props.name}</NavLink>
+            <NavLink key={props.id} to={props.name}>{props.name}</NavLink>
         </div>
     )
 }

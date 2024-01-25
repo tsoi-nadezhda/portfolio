@@ -2,26 +2,27 @@
     display: grid;
     grid-template-columns: 2fr 10fr;
 }
+.dialog{
+    margin-left: 20px;
+}
 .dialogs_items{
     padding: 10px;
 }
-.dialog{
-
+:focus{
+    color: #94969d!important;
 }
-
 .messages{
     padding: 10px;
+    width: 15rem;
 }
-.message{
 
-}
-.dialogs_items .activeLink{
-    color: #94969d;
-}
 .dialogs_items a{
-    color: #252F39;;
+    color: #252F39;
     text-decoration: none;
 }
- a.active{
-    color: red;
-   }
+/*94969d*/
+.item .active{
+    color: #94969d;
+}
+
+
