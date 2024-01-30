@@ -1,17 +1,18 @@
 import React from 'react'
 import s from "./MyPosts.module.css"
 import Post from './Posts/Post'
-import { useRef } from 'react';
-import { addPost } from '../../../redux/state';
 const MyPosts = (props) => {
   // debugger
 
   let newEl = React.createRef()
   { console.log("mypost", props) }
   const handleclick = () => {
+    props.addPost();
+    props.updatePostMessage("");
+  }
+  const onPostChange = () => {
     let text = newEl.current.value;
-    props.addPost(text);
-    newEl.current.value = "";
+    props.updatePostMessage(text);
   }
   return <div className={s.content}>
     <div className={s.postsBlock}>
@@ -19,7 +20,7 @@ const MyPosts = (props) => {
 
       <div>
         <div>
-          <textarea ref={newEl}></textarea>
+          <textarea ref={newEl} value={props.newPostText} onChange={onPostChange}></textarea>
         </div>
         <div>
           <button onClick={handleclick}>Add post</button>

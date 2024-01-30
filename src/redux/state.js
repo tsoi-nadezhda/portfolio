@@ -1,12 +1,13 @@
-import {renderEntireTree} from "../render"
 let state ={
     profilePage:{
+        newPostText:"IT",
         postData :[
             { id: 1, message: "Hi! How are you?", likeCount: 15 },
             { id: 2, message: "It's my first post", likeCount: 20 }
         ]
     },
     messagesPage:{
+        newMessage:"",
         messagesData:[
             { id: 1, message: "Hi", me:"my"},
             { id: 2, message: "How are you?", me:"my" },
@@ -34,8 +35,26 @@ let state ={
         ]
     }
 }
-export let addPost=(text)=>{
-    state.profilePage.postData.push({id:9,message:text,likeCount:1});
+let renderEntireTree=()=>{
+    console.log("state changed")
+}
+export let addPost=()=>{
+    state.profilePage.postData.push({id:9,message:state.profilePage.newPostText,likeCount:1});
     renderEntireTree(state);
+}
+export let updatePostMessage=(text)=>{
+    state.profilePage.newPostText=text;
+    renderEntireTree(state);
+}
+export let sendMessage =()=>{
+    state.messagesPage.messagesData.push({id:10,message:state.messagesPage.newMessage,me:"my"});
+    renderEntireTree(state);
+}
+export let updateTextMessage=(message)=>{
+    state.messagesPage.newMessage=message;
+    renderEntireTree(state);
+}
+export const subscribe=(observer)=>{
+    renderEntireTree=observer;
 }
 export default state
