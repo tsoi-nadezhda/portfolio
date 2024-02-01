@@ -7,12 +7,12 @@ const MyPosts = (props) => {
   let newEl = React.createRef()
   { console.log("mypost", props) }
   const handleclick = () => {
-    props.addPost();
-    props.updatePostMessage("");
+    props.dispatch({ type: "ADD-POST" });
+    props.dispatch({ type: "UPDATE-POST-MESSAGE", text: "" });
   }
   const onPostChange = () => {
     let text = newEl.current.value;
-    props.updatePostMessage(text);
+    props.dispatch({ type: "UPDATE-POST-MESSAGE", text: text });
   }
   return <div className={s.content}>
     <div className={s.postsBlock}>

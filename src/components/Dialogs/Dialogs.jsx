@@ -9,13 +9,13 @@ const Dialogs = (props) => {
     let messagesElements = props.messagesData.map(m => (<Message key={m.id} message={m.message} me={m.me}></Message>))
     let dialogsElements = props.dialogsData.map(d => (<DialogItem key={d.id} id={d.id} name={d.name}></DialogItem>))
     const sendMessage = () => {
-        props.sendMessage();
-        props.updateTextMessage("");
+        props.dispatch({ type: "SEND-MESSAGE" });
+        props.dispatch({ type: "UPDATE-POST-MESSAGE", text: "" });
     }
 
     const updateTextMessage = () => {
         let message = el.current.value;
-        props.updateTextMessage(message);
+        props.dispatch({ type: "UPDATE-POST-MESSAGE", text: message });
     }
     return (
         <div  >
