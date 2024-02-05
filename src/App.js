@@ -17,6 +17,7 @@ import MySidebar from './components/Sidebar/MySidebar';
 //     return (<Home {...props} user={user} />);
 // };
 const App = (props) => {
+    // debugger
     console.log(props)
     return (
     <BrowserRouter>
