@@ -1,3 +1,6 @@
+import profileReducer from "./profile_reducer"
+import sidebarReducer from "./sidebar_reducer"
+import dialogsReducer from "./dialogs_reducer"
 var store={
     _state:{
         profilePage:{
@@ -40,19 +43,10 @@ var store={
         console.log("state changed")
     },
     dispatch(action){
-        if(action.type==="ADD-POST"){
-            this._state.profilePage.postData.push({id:9,message:this._state.profilePage.newPostText,likeCount:1});
-            this._callSubscriber(this._state);
-        }else if(action.type==="UPDATE-POST-MESSAGE"){
-            this._state.profilePage.newPostText=action.text;
-            this._callSubscriber(this._state);
-        }else if(action.type==="SEND-MESSAGE"){
-            this._state.messagesPage.messagesData.push({id:10,message:this._state.messagesPage.newMessage,me:"my"});
-            this._callSubscriber(this._state);
-        }else if(action.type==="UPDATE-TEXT-MESSAGE"){
-            this._state.messagesPage.newMessage=action.message;
-            this._callSubscriber(this._state)
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage,action);
+        this._state.messagesPage = dialogsReducer(this._state.messagesPage,action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar,action);
+        this._callSubscriber(this._state)
     },
     getState(){
         return this._state
@@ -62,7 +56,6 @@ var store={
     },
     
 }
-
 
 
 export default store

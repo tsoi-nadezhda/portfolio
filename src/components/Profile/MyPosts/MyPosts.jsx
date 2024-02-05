@@ -1,18 +1,19 @@
 import React from 'react'
 import s from "./MyPosts.module.css"
 import Post from './Posts/Post'
+import { addPostActionCreator, updatePostMessageCreator } from "../../../redux/profile_reducer"
 const MyPosts = (props) => {
   // debugger
 
   let newEl = React.createRef()
   { console.log("mypost", props) }
   const handleclick = () => {
-    props.dispatch({ type: "ADD-POST" });
-    props.dispatch({ type: "UPDATE-POST-MESSAGE", text: "" });
+    props.dispatch(addPostActionCreator());
+    props.dispatch(updatePostMessageCreator(""));
   }
   const onPostChange = () => {
     let text = newEl.current.value;
-    props.dispatch({ type: "UPDATE-POST-MESSAGE", text: text });
+    props.dispatch(updatePostMessageCreator(text));
   }
   return <div className={s.content}>
     <div className={s.postsBlock}>
