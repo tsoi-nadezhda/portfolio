@@ -5,7 +5,7 @@ import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
 import Footer from './components/Footer';
-import Dialogs from './components/Dialogs/Dialogs';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
@@ -23,17 +23,16 @@ const App = (props) => {
     <BrowserRouter>
         <div className = "app-wrapper" >
             <Header />
-            <Navbar friendsData={props.state.sidebar.friendsData} />
+            <Navbar friendsData={props.store.getState().sidebar.friendsData} />
             <div className = "app-wrapper-content">
                     <Routes>
                     {/* {console.log(props.state.sidebar.friendsData)} */}
-                        <Route path = "/profile" element={<Profile postData={props.state.profilePage.postData} newPostText={props.state.profilePage.newPostText} dispatch={props.dispatch}/>} /> 
-                        <Route path = "/dialogs/*" element = { < Dialogs  newMessage
-={props.state.messagesPage.newMessage} dialogsData={props.state.messagesPage.dialogsData} messagesData={props.state.messagesPage.messagesData} me={props.state.messagesPage.me} dispatch={props.dispatch}/> }/> 
+                        <Route path = "/profile" element={<Profile store={props.store}/>} /> 
+                        <Route path = "/dialogs/*" element = { < DialogsContainer  store={props.store}/> }/> 
                         <Route path = "/news" element = { < News /> }/> 
                         <Route path = "/music" element = { < Music /> }/> 
                         <Route path = "/settings" element = { < Settings /> }/> 
-                        <Route path = "/friends/*" element = { < MySidebar friendsData={props.state.sidebar.friendsData}/> }/> 
+                        <Route path = "/friends/*" element = { < MySidebar store={props.store}/> }/> 
                     </Routes> 
             </div> 
             

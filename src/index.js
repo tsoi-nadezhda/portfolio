@@ -7,11 +7,11 @@ import store from "./redux/redux_store"
 
 // import addPost from "./redux/state"
 let renderEntireTree=(state)=>{
-  debugger
+  // debugger
     console.log(state)
     ReactDOM.render(
       <React.StrictMode>
-        <App state={state} dispatch={store.dispatch.bind(store)} />
+        <App store={store} dispatch={store.dispatch.bind(store)} />
       </React.StrictMode>,
       document.getElementById('root')
     );
