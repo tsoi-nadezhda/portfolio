@@ -12,6 +12,7 @@ const Dialogs = (props) => {
     }
 
     const updateTextMessage = (e) => {
+        e.stopPropagation();
         let message = e.target.value;
         props.updateTextMessage(message);
     }

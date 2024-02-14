@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import './App.css';
 import Header from './components/Header/Header';
-import Navbar from './components/Navbar/Navbar';
+import NavbarContainer from './components/Navbar/NavbarContainer';
 import Profile from './components/Profile/Profile';
 import Footer from './components/Footer';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
@@ -22,7 +22,7 @@ const App = () => {
     <BrowserRouter>
         <div className = "app-wrapper" >
             <Header />
-            <Navbar  />
+            <NavbarContainer  />
             <div className = "app-wrapper-content">
                     <Routes>
                     {/* {console.log(props.state.sidebar.friendsData)} */}

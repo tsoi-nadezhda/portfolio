@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 const MySidebar = (props) => {
     { console.log(props.friendsData) }
-    let friendsData = props.friendsData.map(f => (<div key={f.id}><NavLink className={s.friend} to={f.id}>{f.name}</NavLink></div>))
+    let friendsData = props.friendsData.map(f => (<div key={f.id}><NavLink className={s.friend} to={`/friends/profile/${f.name}`}>{f.name}</NavLink></div>))
     return (
         <div className={s.sidebar}>
             Friends

@@ -3,7 +3,10 @@ import { NavLink } from 'react-router-dom'
 import s from "./Navbar.module.css"
 import StoreContext from "../../StoreContext"
 // console.log(s)
-const Navbar = () => {
+const Navbar = (props) => {
+  { console.log("nav", props) }
+  let friendsData = props.friendsData.slice(0, 3).map(f => (<div key={f.id}>
+    <NavLink to={`/friends/profile/${f.name}`}>{f.name}<img className={s.avatar} src={f.img} /></NavLink></div>))
   return (
 
     <nav className={s.nav}>
@@ -22,21 +25,14 @@ const Navbar = () => {
       <div className={s.item}>
         <NavLink className={({ isActive }) => isActive ? s.activeLink : 'none'} to="/settings">Settings</NavLink>
       </div>
-      <StoreContext.Consumer>
-        {store => {
-          let friendsData = store.getState().sidebar.friendsData.slice(0, 3).map(f => (<div key={f.id}><NavLink to={`/friends/profile/${f.name}`}>{f.name}<img className={s.avatar} src={f.img} /></NavLink></div>))
-          return (
-            <div className={s.sidebar}>
-              <NavLink className={s.friends} to="/friends">Friends</NavLink>
-              <div className={s.friendItems}>
-                {friendsData}
-              </div>
-            </div>
-          )
-        }}
-      </StoreContext.Consumer>
 
-
+      <div className={s.sidebar}>
+        <NavLink className={s.friends} to="/friends">Friends</NavLink>
+        <div className={s.friendItems}>
+          {friendsData}
+        </div>
+      </div>
     </nav>)
 }
+
 export default Navbar;

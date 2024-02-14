@@ -3,7 +3,8 @@ import s from "./MyPosts.module.css"
 import MyPosts from './MyPosts'
 import { addPostActionCreator, updatePostMessageCreator } from "../../../redux/profile_reducer"
 import StoreContext from "../../../StoreContext"
-const MyPostsContainer = () => {
+import { connect } from 'react-redux'
+const MyPostsContainer1 = () => {
   return (
     <StoreContext.Consumer>
       {store => {
@@ -20,4 +21,17 @@ const MyPostsContainer = () => {
     </StoreContext.Consumer>
   )
 }
+const mapStateToProps = (state) => {
+  return {
+    newPostText: state.profilePage.newPostText,
+    postData: state.profilePage.postData
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleclick: () => dispatch(addPostActionCreator()),
+    onPostChange: (text) => dispatch(updatePostMessageCreator(text))
+  }
+}
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
 export default MyPostsContainer
