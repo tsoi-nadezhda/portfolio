@@ -10,6 +10,7 @@ import Music from './components/Music/Music';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import MySidebarContainer from './components/Sidebar/MySidebarContainer';
+import UsersContainer from './components/Users/UsersContainer';
 
 // const WrappedDialogs = function(props) {
 //     // Конструкция "{...props}" нужна, чтобы не потерять
@@ -32,6 +33,7 @@ const App = () => {
                         <Route path = "/music" element = { < Music /> }/> 
                         <Route path = "/settings" element = { < Settings /> }/> 
                         <Route path = "/friends/*" element = { < MySidebarContainer/> }/> 
+                        <Route path = "/users/" element = { < UsersContainer/> }/> 
                     </Routes> 
             </div> 
             
