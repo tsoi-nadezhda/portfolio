@@ -3,6 +3,7 @@ import Users from './Users'
 import axios from "axios"
 import React from "react";
 import { setLoader, setCurrentPage, setTotalCount, follow, unfollow, setUsers } from "../../redux/users_reducer"
+import Spinner from '../Spinner/Spinner';
 
 class UserContainer extends React.Component {
     constructor(props) {
@@ -29,7 +30,7 @@ class UserContainer extends React.Component {
     }
     render() {
         return <>
-            {this.props.isLoading ? <img src="spinner.svg" alt="" /> : null}
+            {this.props.isLoading ? <Spinner /> : null}
             <Users users={this.props.users}
                 totalCount={this.props.totalCount}
                 limit={this.props.limit}

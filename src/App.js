@@ -11,6 +11,7 @@ import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import MySidebarContainer from './components/Sidebar/MySidebarContainer';
 import UsersContainer from './components/Users/UsersContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 // const WrappedDialogs = function(props) {
 //     // Конструкция "{...props}" нужна, чтобы не потерять
@@ -27,7 +28,7 @@ const App = () => {
             <div className = "app-wrapper-content">
                     <Routes>
                     {/* {console.log(props.state.sidebar.friendsData)} */}
-                        <Route path = "/profile" element={<Profile />} /> 
+                        <Route path = "/profile" element={<ProfileContainer />} /> 
                         <Route path = "/dialogs/*" element = { < DialogsContainer /> }/> 
                         <Route path = "/news" element = { < News /> }/> 
                         <Route path = "/music" element = { < Music /> }/> 
