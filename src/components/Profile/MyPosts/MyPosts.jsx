@@ -5,7 +5,6 @@ const MyPosts = (props) => {
   // debugger
 
   let newEl = React.createRef()
-  { console.log("mypost", props) }
   const handleclick = () => {
     props.handleclick();
   }

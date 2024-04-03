@@ -1,10 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Header from './components/Header/Header';
+import HeaderContainer from './components/Header/HeaderContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
-import Profile from './components/Profile/Profile';
-import Footer from './components/Footer';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Music from './components/Music/Music';
 import News from './components/News/News';
@@ -21,12 +19,13 @@ import ProfileContainer from './components/Profile/ProfileContainer';
 const App = () => {
     // debugger
     return (
-    <BrowserRouter>
+    <Router>
         <div className = "app-wrapper" >
-            <Header />
+            <HeaderContainer />
             <NavbarContainer  />
+            
             <div className = "app-wrapper-content">
-                    <Routes>
+            <Routes>
                     {/* {console.log(props.state.sidebar.friendsData)} */}
                         <Route path = "/profile" element={<ProfileContainer />} /> 
                         <Route path = "/dialogs/*" element = { < DialogsContainer /> }/> 
@@ -34,13 +33,17 @@ const App = () => {
                         <Route path = "/music" element = { < Music /> }/> 
                         <Route path = "/settings" element = { < Settings /> }/> 
                         <Route path = "/friends/*" element = { < MySidebarContainer/> }/> 
-                        <Route path = "/users/" element = { < UsersContainer/> }/> 
-                    </Routes> 
+                        
+                        {/* <Route path = "/users/:userId?" element = { < ProfileContainer/> }/>   */}
+                        <Route path="/users/:userId" element={<ProfileContainer />} />
+                        <Route path="/users" element={<UsersContainer />} />
+
+                        </Routes>
+                
             </div> 
             
         </div>
-        </BrowserRouter> 
-
+        </Router>
     )
 
 }

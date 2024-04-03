@@ -1,9 +1,14 @@
-.user{
+.user {
     border: solid 1px #9575AE;
     margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
 }
+.pages{
+    width: 36rem;
+    overflow-x: scroll;
+}
+.user a{ width: 200px;}
 .imgUser{
     width: 50px;
     height: 50px 
