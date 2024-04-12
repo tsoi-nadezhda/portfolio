@@ -16,5 +16,13 @@ export const usersAPI={
     },
     follow(userId){
         return instance.post(`follow/${userId}`)
+    },
+    getProfile(userId){
+        return instance.get(`profile/${userId}`)
+    }
+}
+export const authAPI={
+    me(){
+        return instance.get(`auth/me`)
     }
 }

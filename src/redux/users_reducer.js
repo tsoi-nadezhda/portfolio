@@ -13,8 +13,8 @@ export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE,current
 export const setTotalCount = (total) => ({ type: TOTAL_COUNT,total })
 export const setLoader = (isLoading) => ({ type: SET_LOADER,isLoading })
 export const toggleFollowingProgress = (isLoading,userId) => ({ type: TOGGLE_IS_FOLLOWING,isLoading,userId})
-export const getUsers=(limit,currentPage)=>{
-    return (dispatch)=>{
+export const getUsers=(limit,currentPage)=>
+     (dispatch)=>{
         dispatch(setCurrentPage(currentPage))
         dispatch(setLoader(true))
         
@@ -24,7 +24,7 @@ export const getUsers=(limit,currentPage)=>{
             dispatch(setUsers(data.items));
             dispatch(setLoader(false))
         })
-    }
+    
 }
 export const unfollow=(userId)=>{
     return (dispatch)=>{

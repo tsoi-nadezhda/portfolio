@@ -1,3 +1,4 @@
+import { usersAPI } from "../api/api"
 const UPDATE_POST_MESSAGE="UPDATE-POST-MESSAGE"
 const ADD_POST="ADD-POST"
 const SET_PROFILE_PAGE="SET_PROFILE_PAGE"
@@ -6,6 +7,12 @@ export const addPostActionCreator = () => ({ type: ADD_POST })
 export const updatePostMessageCreator = (text) => ({ type: UPDATE_POST_MESSAGE,  text })
 export const setProfilePage = (profile) => ({ type: SET_PROFILE_PAGE,  profile })
 export const setUserId = (userId) => ({ type: SET_USER_ID,  userId })
+export const getProfile=(userId)=>(dispatch)=>{
+    usersAPI.getProfile(userId)
+    .then((response) => {
+      dispatch(setProfilePage(response.data))
+    })
+}
 
 let initialState = {
     newPostText:"IT",
