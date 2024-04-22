@@ -4,10 +4,6 @@ import { useParams } from 'react-router-dom'
 import MyPostsContainer from './MyPosts/MyPostsContainer'
 import ProfileInfo from './ProfileInfo/ProfileInfo'
 const Profile = (props) => {
-  const params = useParams();
-  console.log("Prooofile", props.state)
-  // props.onUserChosen(params.userId)
-  props.setUserId(params.userId)
 
   return (
     <div >

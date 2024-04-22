@@ -10,6 +10,7 @@ import Settings from './components/Settings/Settings';
 import MySidebarContainer from './components/Sidebar/MySidebarContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
+import Login from './components/Login/Login';
 
 // const WrappedDialogs = function(props) {
 //     // Конструкция "{...props}" нужна, чтобы не потерять
@@ -26,13 +27,13 @@ const App = () => {
             
             <div className = "app-wrapper-content">
             <Routes>
-                    {/* {console.log(props.state.sidebar.friendsData)} */}
                         <Route path = "/profile" element={<ProfileContainer />} /> 
                         <Route path = "/dialogs/*" element = { < DialogsContainer /> }/> 
                         <Route path = "/news" element = { < News /> }/> 
                         <Route path = "/music" element = { < Music /> }/> 
                         <Route path = "/settings" element = { < Settings /> }/> 
                         <Route path = "/friends/*" element = { < MySidebarContainer/> }/> 
+                        <Route path = "/login" element = { < Login/> }/> 
                         
                         {/* <Route path = "/users/:userId?" element = { < ProfileContainer/> }/>   */}
                         <Route path="/users/:userId" element={<ProfileContainer />} />

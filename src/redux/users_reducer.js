@@ -4,11 +4,13 @@ const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
 const TOTAL_COUNT = "TOTAL_COUNT"
 const SET_CURRENT_PAGE= "SET_CURRENT_PAGE"
+const SET_CURRENT_USER_ID= "SET_CURRENT_USER_ID"
 const SET_LOADER = "SET_LOADER"
 const TOGGLE_IS_FOLLOWING = "TOGGLE_IS_FOLLOWING"
 export const setUsers = (users) => ({ type: SET_USERS,users })
 export const followSuccess = (userId) => ({ type: FOLLOW, userId })
 export const unfollowSuccess = (userId) => ({ type: UNFOLLOW,userId })
+export const setCurrentUserId = (userId) => ({ type: SET_CURRENT_USER_ID,userId })
 export const setCurrentPage = (currentPage) => ({ type: SET_CURRENT_PAGE,currentPage })
 export const setTotalCount = (total) => ({ type: TOTAL_COUNT,total })
 export const setLoader = (isLoading) => ({ type: SET_LOADER,isLoading })
@@ -19,7 +21,6 @@ export const getUsers=(limit,currentPage)=>
         dispatch(setLoader(true))
         
         usersAPI.getUsers(limit, currentPage).then((data) => {
-            console.log("jyhjc",data)
             dispatch(setTotalCount(data.totalCount));
             dispatch(setUsers(data.items));
             dispatch(setLoader(false))
@@ -55,7 +56,8 @@ let initialState = {
     limit:30,
     currentPage:1,
     isLoading:true,
-    followingInProgress:[]
+    followingInProgress:[],
+    currentUserId:31017
  }
  const usersReducer =(state=initialState,action)=>{
     switch(action.type){
@@ -111,6 +113,12 @@ let initialState = {
                 followingInProgress:action.isLoading?
                 [...state.followingInProgress,action.userId]
                 :state.followingInProgress.filter(id=>id!==action.userId)
+            }
+        }
+        case SET_CURRENT_USER_ID:{
+            return{
+                ...state,
+                currentUserId:action.userId
             }
         }
     default: return state;

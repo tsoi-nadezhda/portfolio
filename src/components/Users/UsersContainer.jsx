@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Users from './Users'
 import React from "react";
-import { follow, unfollow, getUsers } from "../../redux/users_reducer"
+import { follow, unfollow, getUsers, setCurrentUserId } from "../../redux/users_reducer"
 import Spinner from '../Spinner/Spinner';
 
 class UserContainer extends React.Component {
@@ -27,6 +27,7 @@ class UserContainer extends React.Component {
                 unfollow={this.props.unfollow}
                 currentPage={this.props.currentPage}
                 followingInProgress={this.props.followingInProgress}
+                setCurrentUserId={this.props.setCurrentUserId}
             />
         </>
     }
@@ -43,7 +44,7 @@ const mapStateToProps = (state) => {
 }
 
 const UsersContainer = connect(mapStateToProps, {
-    follow, unfollow, getUsers
+    follow, unfollow, getUsers, setCurrentUserId
 })(UserContainer)
 
 export default UsersContainer

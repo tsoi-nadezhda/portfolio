@@ -1,8 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import s from "./Navbar.module.css"
-import StoreContext from "../../StoreContext"
-// console.log(s)
+
 const Navbar = (props) => {
   let friendsData = props.friendsData.slice(0, 3).map(f => (<div key={f.id}>
     <NavLink to={`/friends/profile/${f.name}`}>{f.name}<img className={s.avatar} src={f.img} /></NavLink></div>))

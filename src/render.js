@@ -5,9 +5,8 @@ import App from './App';
 import {addPost,updatePostMessage,sendMessage, updateTextMessage} from "./redux/state"
 import reportWebVitals from './reportWebVitals';
 
-// console.log(state)
+
 export let renderEntireTree=(props)=>{
-  console.log(props)
   ReactDOM.render(
     <React.StrictMode>
       <App state= {props} addPost={addPost} updatePostMessage={updatePostMessage} sendMessage={sendMessage} updateTextMessage={updateTextMessage}/>

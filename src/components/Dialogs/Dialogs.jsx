@@ -2,15 +2,16 @@ import React from 'react'
 import s from "./Dialogs.module.css"
 import DialogItem from "./DialogItem/DialogItem"
 import Message from "./Message/Message"
+import { Navigate } from 'react-router-dom';
+
 const Dialogs = (props) => {
-    console.log(props)
     let el = React.createRef();
     let messagesElements = props.state.messagesData.map(m => (<Message key={m.id} message={m.message} me={m.me}></Message>))
     let dialogsElements = props.state.dialogsData.map(d => (<DialogItem key={d.id} id={d.id} name={d.name}></DialogItem>))
     const sendMessage = () => {
         props.sendMessage();
     }
-
+    if (props.isAuth === false) return <Navigate to={"/login"}></Navigate>
     const updateTextMessage = (e) => {
         e.stopPropagation();
         let message = e.target.value;
