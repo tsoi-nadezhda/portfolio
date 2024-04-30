@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { setLoader } from "../../redux/users_reducer"
 import Spinner from '../Spinner/Spinner'
 import { WithAuthRedirect } from "../../hoc/WithAuthRedirect"
+import { compose } from 'redux'
 
 import { setProfilePage, setUserId, getProfile } from "../../redux/profile_reducer"
 
@@ -31,7 +32,6 @@ class ProfileContainer extends React.Component {
 }
 
 
-let AuthRedirectComponent = WithAuthRedirect(ProfileContainer)
 
 const mapStateToProps = (state) => {
   return {
@@ -40,4 +40,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { setProfilePage, setLoader, setUserId, getProfile })(AuthRedirectComponent);
+export default compose(connect(mapStateToProps, { setProfilePage, setLoader, setUserId, getProfile }), WithAuthRedirect)(ProfileContainer)
