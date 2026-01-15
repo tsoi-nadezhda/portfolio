@@ -1,21 +1,24 @@
 .app-wrapper {
     display: grid;
-    width: 1200px;
+    width: 100%;
     grid-template-areas: "h h" "n c";
     grid-template-rows: 60px 1fr;
     grid-template-columns: 2fr 10fr;
     grid-gap: 10px;
 }
-.app-wrapper-content{
+
+.app-wrapper-content {
     grid-area: c;
     background-color: #ECF0F1;
     margin-left: 15px;
 }
+
 .content img {
     margin: 0;
     width: 65em;
     height: auto;
 }
+
 div#my {
     text-align: end;
 }

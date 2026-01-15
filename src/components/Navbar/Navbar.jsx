@@ -1,6 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { setCurrentUserId } from '../../redux/users_reducer'
 import s from "./Navbar.module.css"
+
 
 const Navbar = (props) => {
   let friendsData = props.friendsData.slice(0, 3).map(f => (<div key={f.id}>

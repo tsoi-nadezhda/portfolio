@@ -1,0 +1,25 @@
+.loginForm,
+.resetPasswordForm {
+    display: flex;
+    background-color: bisque;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.loginForm>form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.inputField {
+    display: flex;
+    width: 35vw;
+    flex-direction: column;
+}
+
+.remember {
+    flex-direction: row;
+}

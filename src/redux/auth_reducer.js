@@ -1,19 +1,38 @@
 import { authAPI } from "../api/api"
 const SET_USER_DATA = "SET_USER_DATA";
-export const setAuthUserData = (userId,email,login) => ({ type: SET_USER_DATA,data:{userId,email,login} });
-export const getAuthUserData=()=>(dispatch)=>{
-   authAPI.me().then((response) => {
+const UNSET_USER_DATA = "UNSET_USER_DATA";
+export const setAuthUserData = (userId, email, login) => ({ type: SET_USER_DATA, data: { userId, email, login } });
+export const unsetAuthUserData = () => ({ type: UNSET_USER_DATA, data: {} });
+export const logIn = (email, password, rememberMe) => (dispatch) => {
+   authAPI.logIn(email, password, rememberMe).then((response) => {
+      // debugger
       if (response.data.resultCode === 0) {
-          let { id, email, login } = { ...response.data.data }
-          dispatch(setAuthUserData(id, email, login))
+         dispatch(getAuthUserData())
       }
-  })
+   })
+}
+export const logOut = () => (dispatch) => {
+   authAPI.logOut().then((response) => {
+      // debugger
+      if (response.data.resultCode === 0) {
+         dispatch(unsetAuthUserData({}))
+      }
+   })
+}
+export const getAuthUserData = () => (dispatch) => {
+   authAPI.me().then((response) => {
+      // debugger
+      if (response.data.resultCode === 0) {
+         let { email, id, login } = { ...response.data.data }
+         dispatch(setAuthUserData(id, email, login))
+      }
+   })
 }
 let initialState = {
-   userId:null,
-   login:null,
-   email:null,
-   isAuth:false
+   userId: null,
+   email: null,
+   login: null,
+   isAuth: false
 };
 const authReducer = (state = initialState, action) => {
    switch (action.type) {
@@ -21,7 +40,15 @@ const authReducer = (state = initialState, action) => {
          return {
             ...state,
             ...action.data,
-            isAuth:true
+            isAuth: true
+         };
+      }
+      case UNSET_USER_DATA: {
+         return {
+            userId: null,
+            email: null,
+            login: null,
+            isAuth: false
          };
       }
       default: return state;

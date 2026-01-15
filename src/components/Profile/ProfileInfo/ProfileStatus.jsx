@@ -1,38 +1,68 @@
-import React from 'react'
-import s from "./ProfileInfo.module.css"
+import React, { Component } from 'react';
 
-class ProfileStatus extends React.Component {
+class ProfileStatus extends Component {
+  // constructor(props) {
+  //   super(props);
   state = {
-    editMode: false
+    editMode: false,
+    status: this.props.status || ""
   };
-  activateMode() {
-    debugger
+  // }
+
+  activateEditMode = () => {
     this.setState({
       editMode: true
-    })
+    });
   }
-  deactivateEditMode() {
+
+  deactivateEditMode = () => {
     this.setState({
       editMode: false
-    })
+    });
+    // Вызов метода из props для обновления статуса в родительском компоненте
+    if (this.props.updateStatus) {
+      this.props.updateStatus(this.state.status);
+    }
   }
+
+  onStatusChange = (e) => {
+    this.setState({
+      status: e.currentTarget.value
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    // Обновление состояния, если пропс изменился
+    if (prevProps.status !== this.props.status) {
+      this.setState({
+        status: this.props.status
+      });
+    }
+  }
+
   render() {
     return (
       <div>
-        {this.state.editMode ?
-          <div >
-            <input value={this.props.status} autoFocus={true} onBlur={this.deactivateEditMode.bind(this)}></input>
-          </div>
-          :
+        {!this.state.editMode && (
           <div>
-            <span onDoubleClick={this.activateMode.bind(this)}>{this.props.status}</span>
+            <span onDoubleClick={this.activateEditMode}>
+              {this.state.status || "No status"}
+            </span>
           </div>
-        }
-
+        )}
+        {this.state.editMode && (
+          <div>
+            <input
+              onChange={this.onStatusChange}
+              autoFocus={true}
+              onBlur={this.deactivateEditMode}
+              value={this.state.status}
+            />
+          </div>
+        )}
       </div>
-    )
+    );
   }
-
-
 }
+
 export default ProfileStatus;

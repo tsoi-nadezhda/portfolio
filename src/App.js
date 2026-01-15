@@ -10,7 +10,7 @@ import Settings from './components/Settings/Settings';
 import MySidebarContainer from './components/Sidebar/MySidebarContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
-import Login from './components/Login/Login';
+import LoginContainer from './components/Login/LoginContainer';
 
 // const WrappedDialogs = function(props) {
 //     // Конструкция "{...props}" нужна, чтобы не потерять
@@ -20,30 +20,30 @@ import Login from './components/Login/Login';
 const App = () => {
     // debugger
     return (
-    <Router>
-        <div className = "app-wrapper" >
-            <HeaderContainer />
-            <NavbarContainer  />
-            
-            <div className = "app-wrapper-content">
-            <Routes>
-                        <Route path = "/profile" element={<ProfileContainer />} /> 
-                        <Route path = "/dialogs/*" element = { < DialogsContainer /> }/> 
-                        <Route path = "/news" element = { < News /> }/> 
-                        <Route path = "/music" element = { < Music /> }/> 
-                        <Route path = "/settings" element = { < Settings /> }/> 
-                        <Route path = "/friends/*" element = { < MySidebarContainer/> }/> 
-                        <Route path = "/login" element = { < Login/> }/> 
-                        
+        <Router>
+            <div className="app-wrapper" >
+                <HeaderContainer />
+                <NavbarContainer />
+
+                <div className="app-wrapper-content">
+                    <Routes>
+                        <Route path="/profile" element={<ProfileContainer />} />
+                        <Route path="/dialogs/*" element={< DialogsContainer />} />
+                        <Route path="/news" element={< News />} />
+                        <Route path="/music" element={< Music />} />
+                        <Route path="/settings" element={< Settings />} />
+                        <Route path="/friends/*" element={< MySidebarContainer />} />
+                        <Route path="/login" element={< LoginContainer />} />
+
                         {/* <Route path = "/users/:userId?" element = { < ProfileContainer/> }/>   */}
                         <Route path="/users/:userId" element={<ProfileContainer />} />
                         <Route path="/users" element={<UsersContainer />} />
 
-                        </Routes>
-                
-            </div> 
-            
-        </div>
+                    </Routes>
+
+                </div>
+
+            </div>
         </Router>
     )
 

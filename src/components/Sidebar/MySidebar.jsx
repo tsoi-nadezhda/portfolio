@@ -7,6 +7,7 @@ const MySidebar = (props) => {
     return (
         <div className={s.sidebar}>
             Friends
+
             <div className={s.friends}>
                 {friendsData}
             </div>

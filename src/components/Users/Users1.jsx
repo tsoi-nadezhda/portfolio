@@ -1,7 +1,7 @@
 import axios from "axios"
 import s from "./Users.module.css"
 const Users = (props) => {
-    debugger
+    // debugger
     let users = () => {
         if (props.users.length === 0) {
             axios.get("https://social-network.samuraijs.com/api/1.0/users").then((response) => {
