@@ -20,7 +20,7 @@ export const logOut = () => (dispatch) => {
    })
 }
 export const getAuthUserData = () => (dispatch) => {
-   authAPI.me().then((response) => {
+   return authAPI.me().then((response) => {
       // debugger
       if (response.data.resultCode === 0) {
          let { email, id, login } = { ...response.data.data }

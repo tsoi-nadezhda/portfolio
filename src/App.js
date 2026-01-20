@@ -11,16 +11,26 @@ import MySidebarContainer from './components/Sidebar/MySidebarContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import LoginContainer from './components/Login/LoginContainer';
-
+import { connect } from 'react-redux';
+import { initialize } from './redux/app_reducer';
+import Spinner from "./components/Spinner/Spinner"
 // const WrappedDialogs = function(props) {
 //     // Конструкция "{...props}" нужна, чтобы не потерять
 //     // параметры, переданные от компонента Route
 //     return (<Home {...props} user={user} />);
 // };
-const App = () => {
+class App extends React.Component {
     // debugger
-    return (
-        <Router>
+    componentDidMount() {
+        this.props.initialize();
+    }
+
+    render() {
+        // debugger
+        if (!this.props.initialized) {
+            return <Spinner />
+        }
+        return <Router>
             <div className="app-wrapper" >
                 <HeaderContainer />
                 <NavbarContainer />
@@ -44,8 +54,12 @@ const App = () => {
                 </div>
 
             </div>
-        </Router>
-    )
-
+        </Router >
+    }
 }
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        initialized: state.app.isInitialized
+    }
+}
+export default connect(mapStateToProps, { initialize })(App);
