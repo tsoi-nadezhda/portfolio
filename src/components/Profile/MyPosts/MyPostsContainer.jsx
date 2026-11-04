@@ -1,16 +1,19 @@
 import MyPosts from './MyPosts'
-import { addPostActionCreator, updatePostMessageCreator } from "../../../redux/profile_reducer"
+import { savePost, deletePost, likePost, updatePostMessageCreator } from "../../../redux/profile_reducer"
 import { connect } from 'react-redux'
 
 const mapStateToProps = (state) => {
   return {
     newPostText: state.profilePage.newPostText,
-    postData: state.profilePage.postData
+    postData: state.profilePage.postData,
+    isOwner: state.profilePage.profile != null && state.auth.userId === state.profilePage.profile.userId
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleclick: () => dispatch(addPostActionCreator()),
+    handleclick: () => dispatch(savePost()),
+    onDelete: (postId) => dispatch(deletePost(postId)),
+    onLike: (postId) => dispatch(likePost(postId)),
     onPostChange: (text) => dispatch(updatePostMessageCreator(text))
   }
 }

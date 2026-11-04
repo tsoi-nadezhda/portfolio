@@ -1,7 +1,49 @@
 .item {
-    color: greenyellow;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-top: 1px solid #f0ebe6;
+    color: #2c2622;
 }
 
 .item img {
-    width: 50px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.message {
+    flex: 1;
+}
+
+.item div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: auto;
+    color: #8a8178;
+    font-size: 13px;
+}
+
+.item button {
+    padding: 4px 10px;
+    background: transparent;
+    color: #6b3f86;
+    border: 1px solid #e4d4ee;
+}
+
+.item button:hover {
+    background: #f4e9f8;
+}
+
+.like,
+.liked {
+    min-width: 52px;
+}
+
+.liked {
+    background: #f4e9f8;
+    border-color: #6b3f86;
 }

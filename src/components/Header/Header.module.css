@@ -1,16 +1,41 @@
 .header {
     grid-area: h;
-    background: linear-gradient(90deg, rgba(184,127,168,1) 0%, rgba(72,96,188,1) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    background: #1f1a24;
+    color: #fff;
+}
+
+.header::before {
+    content: "Social";
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
 }
 
 .header img {
-    width: 30px;
+    display: none;
 }
-.loginBlock{
-    float: right;
-    color: blanchedalmond;
-   
+
+.loginBlock {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-.loginBlock a { 
-    color: blanchedalmond;
+
+.loginBlock a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.loginBlock button {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.loginBlock button:hover {
+    background: rgba(255, 255, 255, 0.12);
 }

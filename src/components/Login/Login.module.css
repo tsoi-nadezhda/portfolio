@@ -1,25 +1,69 @@
-.loginForm,
-.resetPasswordForm {
+.loginForm {
     display: flex;
-    background-color: bisque;
-    height: 100%;
-    flex-direction: column;
+    min-height: calc(100vh - 140px);
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
-.loginForm>form {
-    align-items: center;
+.loginForm > form {
     display: flex;
     flex-direction: column;
+    gap: 16px;
+    width: min(400px, 100%);
+    padding: 32px;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 12px 32px rgba(40, 24, 48, 0.08);
+}
+
+.loginForm h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c2622;
+}
+
+.loginForm span,
+.error {
+    color: #9a3d55;
+    font-size: 13px;
+}
+
+.note {
+    margin: 0;
+    color: #6d645c;
+    font-size: 14px;
+    line-height: 1.45;
 }
 
 .inputField {
     display: flex;
-    width: 35vw;
     flex-direction: column;
+    gap: 6px;
+}
+
+.inputField label,
+.remember > div {
+    color: #8a8178;
+    font-size: 13px;
 }
 
 .remember {
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.remember input {
+    width: 18px;
+    height: 18px;
+}
+
+.switchMode {
+    background: transparent;
+    color: #6b3f86;
+}
+
+.switchMode:hover {
+    background: #f4e9f8;
 }

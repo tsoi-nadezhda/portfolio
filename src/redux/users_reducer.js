@@ -1,4 +1,6 @@
 import { usersAPI } from "../api/api"
+import { getRelations } from "./sidebar_reducer"
+import { setProfilePage } from "./profile_reducer"
 const SET_USERS="SET_USERS"
 const FOLLOW = "FOLLOW"
 const UNFOLLOW = "UNFOLLOW"
@@ -28,23 +30,33 @@ export const getUsers=(limit,currentPage)=>
     
 }
 export const unfollow=(userId)=>{
-    return (dispatch)=>{
+    return (dispatch, getState)=>{
         dispatch(toggleFollowingProgress(true, userId))
         usersAPI.unfollow(userId).then(response => {
 
             if (response.data.resultCode === 0) {
                 dispatch(unfollowSuccess(userId))
+                dispatch(getRelations())
+                const profile = getState().profilePage.profile
+                if (profile && Number(profile.userId) === Number(userId)) {
+                    dispatch(setProfilePage({ ...profile, followed: false, isFriend: false }))
+                }
             }
             dispatch(toggleFollowingProgress(false, userId))
         })
     }
 }
 export const follow=(userId)=>{
-    return (dispatch)=>{
+    return (dispatch, getState)=>{
         dispatch(toggleFollowingProgress(true, userId))
         usersAPI.follow(userId).then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(followSuccess(userId))
+                dispatch(getRelations())
+                const profile = getState().profilePage.profile
+                if (profile && Number(profile.userId) === Number(userId)) {
+                    dispatch(setProfilePage({ ...profile, followed: true, isFriend: Boolean(profile.followsMe) }))
+                }
             }
             dispatch(toggleFollowingProgress(false, userId))
         })
@@ -57,7 +69,7 @@ let initialState = {
     currentPage:1,
     isLoading:true,
     followingInProgress:[],
-    currentUserId:31017
+    currentUserId: null
  }
  const usersReducer =(state=initialState,action)=>{
     switch(action.type){
@@ -66,7 +78,7 @@ let initialState = {
                 ...state,
                 users:state.users.map(u=>{
                     if(u.id===action.userId){
-                        return {...u,followed:true}
+                        return {...u, followed:true, isFriend: Boolean(u.followsMe)}
                     }
                     return u;
                 })
@@ -77,7 +89,7 @@ let initialState = {
                 ...state,
                 users:state.users.map(u=>{
                     if(u.id===action.userId){
-                        return {...u,followed:false}
+                        return {...u, followed:false, isFriend:false}
                     }
                     return u;
                 })

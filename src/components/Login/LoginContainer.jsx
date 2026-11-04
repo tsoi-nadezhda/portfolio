@@ -1,6 +1,6 @@
 import React from 'react'
 import Login from "./Login"
-import { logIn } from "../../redux/auth_reducer"
+import { logIn, signUp, clearAuthError, confirmEmail, clearPendingEmail } from "../../redux/auth_reducer"
 import { connect } from 'react-redux'
 class LoginContainer extends React.Component {
     componentDidMount() {
@@ -14,9 +14,12 @@ class LoginContainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
-        login: state.auth.login
+        login: state.auth.login,
+        error: state.auth.error,
+        pendingEmail: state.auth.pendingEmail,
+        mailSent: state.auth.mailSent
     }
 }
 
 
-export default connect(mapStateToProps, { logIn })(LoginContainer);
+export default connect(mapStateToProps, { logIn, signUp, clearAuthError, confirmEmail, clearPendingEmail })(LoginContainer);

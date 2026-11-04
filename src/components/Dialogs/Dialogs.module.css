@@ -1,39 +1,153 @@
-.dialogs{
+.dialogs {
     display: grid;
-    grid-template-columns: 2fr 10fr;
-}
-.dialog{
-    margin-left: 20px;
-}
-.dialogs_items{
-    padding: 10px;
-    border-right: white 2px solid
-}
-:focus{
-    color: #94969d!important;
-}
-.messages{
-    padding: 10px 25px;;
-    width: 15rem;
+    grid-template-columns: 220px 1fr;
+    min-height: calc(100vh - 140px);
+    overflow: hidden;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(40, 24, 48, 0.06);
 }
 
-.dialogs_items a{
-    color: #252F39;
+.dialogs_items {
+    padding: 12px;
+    background: #faf7f4;
+    border-right: 1px solid #efeae4;
+}
+
+.dialog {
+    margin: 0;
+}
+
+.dialog a {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: #2c2622;
     text-decoration: none;
 }
-/*94969d*/
-.item .active{
-    color: #94969d;
+
+.dialog small {
+    color: #8a8178;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-.messagesArea{
-    margin: 30px 0;
-    height: 200px;
+
+.dialog a:hover,
+.active {
+    background: #fff;
+    color: #6b3f86;
+}
+
+.active small {
+    color: #6b3f86;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    min-width: 0;
+    padding: 20px;
+}
+
+.chatHeader {
+    margin-bottom: 12px;
+}
+
+.chatName {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c2622;
+}
+
+
+.messagesArea {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 320px;
+    margin: 0 0 16px;
     overflow: auto;
 }
-.messagesArea::-webkit-scrollbar {
-    width: 10px;
-  }
-.textArea >textarea{
-    width:240px;
-    height: 60px;
+
+.message {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    background: #f3eee8;
+}
+
+.mine {
+    align-self: flex-end;
+    background: #6b3f86;
+    color: #fff;
+}
+
+.theirs {
+    align-self: flex-start;
+}
+
+.meta {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 4px;
+    font-size: 11px;
+    opacity: 0.8;
+}
+
+.message button.delete {
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 11px;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.message button.delete:hover {
+    background: transparent;
+    text-decoration: underline;
+}
+
+.textArea {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.textArea > textarea {
+    height: 64px;
+    resize: vertical;
+}
+
+.empty {
+    padding: 10px 12px;
+    color: #8a8178;
+    font-size: 14px;
+}
+
+@media (max-width: 800px) {
+    .dialogs {
+        grid-template-columns: 1fr;
+    }
+
+    .dialogs_items {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        border-right: 0;
+        border-bottom: 1px solid #efeae4;
+    }
+
+    .dialog a {
+        white-space: nowrap;
+    }
 }

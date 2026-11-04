@@ -1,14 +1,31 @@
+import { usersAPI } from "../api/api"
+
+const SET_RELATIONS = "SET_RELATIONS"
+export const setRelations = (data) => ({ type: SET_RELATIONS, data })
+export const getRelations = () => (dispatch) => {
+    return usersAPI.getRelations().then((data) => {
+        if (data.resultCode === 0) {
+            dispatch(setRelations(data.data))
+        }
+    })
+}
+
 let initialState = {
-   friendsData:[
-       { id: 1, name: "Nadya", img:"https://i.imgur.com/dmRcOOI.png" },
-       { id: 2, name: "Evgenii", img:"https://i.imgur.com/dmRcOOI.png" },
-       { id: 3, name: "Lubov", img:"https://i.imgur.com/dmRcOOI.png"},
-       { id: 4, name: "Oleg", img:""},
-       { id: 5, name: "Vinni", img:""},
-       { id: 6, name: "Puh", img:""}
-   ]
+    friends: [],
+    following: [],
+    followers: [],
 }
-const sidebarReducer =(state=initialState,action)=>{
-   return state;
+const sidebarReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case SET_RELATIONS: {
+            return {
+                ...state,
+                friends: action.data.friends,
+                following: action.data.following,
+                followers: action.data.followers,
+            }
+        }
+        default: return state
+    }
 }
-export default sidebarReducer;
+export default sidebarReducer

@@ -1,37 +1,101 @@
 .nav {
-    padding: 10px;
     grid-area: n;
-    background-color: #ECF0F1;
+    padding: 18px 12px;
+    background: #fff;
+    border-right: 1px solid #efeae4;
 }
 
-.item a{
-    color: #252F39;
+.item a {
+    display: block;
+    margin: 2px 0;
+    padding: 10px 14px;
+    border-radius: 10px;
+    color: #3d3644;
     text-decoration: none;
-    background-color: white;
-    border-radius: 15%;
-    size: 2rem;
-    margin-left: 15px;
 }
 
-.item .activeLink{
-    color: #94969d;
+.item a:hover {
+    background: #faf7f4;
 }
-.sidebar{
-    margin-top: 30px;
+
+.item .activeLink {
+    background: #f4e9f8;
+    color: #6b3f86;
+    font-weight: 650;
 }
-.friends{
-    font-weight: 500;
-    font-size: xx-large;
+
+.sidebar {
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 1px solid #efeae4;
+}
+
+.friends {
+    display: block;
+    margin: 0 14px 12px;
+    color: #6b3f86;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
     text-decoration: none;
-    color: #9575AE;
-    margin-left: 35px;
 }
-.friendItems{
+
+.friendItems {
     display: flex;
-    margin-left: 5px;
+    flex-direction: column;
+    gap: 4px;
 }
-.avatar{
-    width:45px;
-    height:45px;
+
+.friendItems a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px;
+    border-radius: 10px;
+    color: #3d3644;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.friendItems a:hover {
+    background: #faf7f4;
+}
+
+.activeFriend {
+    background: #f4e9f8;
+    color: #6b3f86;
+    font-weight: 650;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
+    object-fit: cover;
+}
+
+.empty {
+    padding: 6px 14px;
+    color: #8a8178;
+    font-size: 13px;
+}
+
+@media (max-width: 800px) {
+    .nav {
+        display: flex;
+        gap: 4px;
+        overflow-x: auto;
+        border-right: 0;
+        border-bottom: 1px solid #efeae4;
+        padding: 8px;
+    }
+
+    .item a {
+        white-space: nowrap;
+    }
+
+    .sidebar {
+        display: none;
+    }
 }

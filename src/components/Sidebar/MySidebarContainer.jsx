@@ -1,20 +1,25 @@
 import React from 'react'
-import MySidebar from './MySidebar'
-import StoreContext from "../../StoreContext"
 import { connect } from 'react-redux'
-const MySidebarContainer1 = () => {
-    return (
-        <StoreContext.Consumer>
-            {store => {
-                return <MySidebar friendsData={store.getState().sidebar.friendsData} />
-            }}
-        </StoreContext.Consumer>
-    )
-}
-const mapStateToProps = (state) => {
-    return {
-        friendsData: state.sidebar.friendsData,
+import MySidebar from './MySidebar'
+import { getRelations } from '../../redux/sidebar_reducer'
+import { setCurrentUserId } from '../../redux/users_reducer'
+
+class MySidebarContainer extends React.Component {
+    componentDidMount() {
+        this.props.getRelations()
+    }
+
+    render() {
+        return <MySidebar {...this.props} />
     }
 }
-const MySidebarContainer = connect(mapStateToProps)(MySidebar)
-export default MySidebarContainer
+
+const mapStateToProps = (state) => {
+    return {
+        friends: state.sidebar.friends,
+        following: state.sidebar.following,
+        followers: state.sidebar.followers,
+    }
+}
+
+export default connect(mapStateToProps, { getRelations, setCurrentUserId })(MySidebarContainer)

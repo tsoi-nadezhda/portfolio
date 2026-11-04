@@ -1,6 +1,67 @@
-.friend{
-    text-decoration:none;
+.page {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
 }
-.sidebar{
-    margin-left: 20px;
+
+.section {
+    padding: 20px;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(40, 24, 48, 0.06);
+}
+
+.section h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.section p {
+    margin: 6px 0 16px;
+    color: #8a8178;
+    font-size: 14px;
+}
+
+.friend {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 0;
+    border-top: 1px solid #f0ebe6;
+    color: #2c2622;
+    text-decoration: none;
+}
+
+.friend img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #f4e9f8;
+}
+
+.friend span {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.friend small {
+    color: #8a8178;
+    font-size: 13px;
+}
+
+.friend:hover strong {
+    color: #6b3f86;
+}
+
+.empty {
+    color: #8a8178;
+    font-size: 14px;
+}
+
+@media (max-width: 800px) {
+    .page {
+        grid-template-columns: 1fr;
+    }
 }

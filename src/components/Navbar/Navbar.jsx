@@ -1,12 +1,16 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { setCurrentUserId } from '../../redux/users_reducer'
 import s from "./Navbar.module.css"
 
+const fallbackPhoto = "./smile.jpg"
 
 const Navbar = (props) => {
-  let friendsData = props.friendsData.slice(0, 3).map(f => (<div key={f.id}>
-    <NavLink to={`/friends/profile/${f.name}`}>{f.name}<img className={s.avatar} src={f.img} /></NavLink></div>))
+  let friendsData = props.friends.slice(0, 3).map(f => (<div key={f.id}>
+    <NavLink className={({ isActive }) => isActive ? s.activeFriend : undefined} to={`/users/${f.id}`} onClick={() => props.setCurrentUserId(f.id)}>
+      <img className={s.avatar} src={f.photos.small || fallbackPhoto} alt="" />
+      {f.name}
+    </NavLink>
+  </div>))
   return (
 
     <nav className={s.nav}>
@@ -26,14 +30,14 @@ const Navbar = (props) => {
         <NavLink className={({ isActive }) => isActive ? s.activeLink : 'none'} to="/settings">Settings</NavLink>
       </div>
       <div className={s.item}>
-        <NavLink className={({ isActive }) => isActive ? s.activeLink : 'none'} to="/users">Users</NavLink>
+        <NavLink className={({ isActive }) => isActive ? s.activeLink : undefined} end to="/users">Users</NavLink>
       </div>
-      <div className={s.sidebar}>
+      {props.isAuth ? <div className={s.sidebar}>
         <NavLink className={s.friends} to="/friends">Friends</NavLink>
         <div className={s.friendItems}>
-          {friendsData}
+          {friendsData.length ? friendsData : <div className={s.empty}>No friends yet</div>}
         </div>
-      </div>
+      </div> : null}
     </nav>)
 }
 

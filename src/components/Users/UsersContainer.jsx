@@ -29,6 +29,7 @@ class UserContainer extends React.Component {
                 currentPage={this.props.currentPage}
                 followingInProgress={this.props.followingInProgress}
                 setCurrentUserId={this.props.setCurrentUserId}
+                authorizedUserId={this.props.authorizedUserId}
             />
         </>
     }
@@ -40,7 +41,8 @@ const mapStateToProps = (state) => {
         limit: state.usersPage.limit,
         currentPage: state.usersPage.currentPage,
         isLoading: state.usersPage.isLoading,
-        followingInProgress: state.usersPage.followingInProgress
+        followingInProgress: state.usersPage.followingInProgress,
+        authorizedUserId: state.auth.userId
     }
 }
 

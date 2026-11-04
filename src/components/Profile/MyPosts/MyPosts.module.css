@@ -1,6 +1,19 @@
-.postsBlock{
-    padding:10px;
+.postsBlock {
+    padding: 20px;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(40, 24, 48, 0.06);
 }
-.posts{
-    margin-top: 10px;
+
+.postsBlock > div:first-of-type {
+    margin: 14px 0;
+}
+
+.posts {
+    margin-top: 8px;
+}
+
+.content textarea {
+    max-width: 480px;
+    min-height: 72px;
 }

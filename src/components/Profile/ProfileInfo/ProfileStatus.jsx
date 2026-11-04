@@ -10,6 +10,7 @@ class ProfileStatus extends Component {
   // }
 
   activateEditMode = () => {
+    if (!this.props.isOwner) return
     this.setState({
       editMode: true
     });
@@ -38,6 +39,11 @@ class ProfileStatus extends Component {
         status: this.props.status
       });
     }
+    if (!this.props.isOwner && this.state.editMode) {
+      this.setState({
+        editMode: false
+      });
+    }
   }
 
   render() {
@@ -45,7 +51,7 @@ class ProfileStatus extends Component {
       <div>
         {!this.state.editMode && (
           <div>
-            <span onDoubleClick={this.activateEditMode}>
+            <span onDoubleClick={this.props.isOwner ? this.activateEditMode : undefined}>
               {this.state.status || "No status"}
             </span>
           </div>
@@ -57,6 +63,7 @@ class ProfileStatus extends Component {
               autoFocus={true}
               onBlur={this.deactivateEditMode}
               value={this.state.status}
+              maxLength={100}
             />
           </div>
         )}

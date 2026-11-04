@@ -11,6 +11,7 @@ import MySidebarContainer from './components/Sidebar/MySidebarContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import LoginContainer from './components/Login/LoginContainer';
+import Confirm from './components/Login/Confirm';
 import { connect } from 'react-redux';
 import { initialize } from './redux/app_reducer';
 import Spinner from "./components/Spinner/Spinner"
@@ -38,12 +39,13 @@ class App extends React.Component {
                 <div className="app-wrapper-content">
                     <Routes>
                         <Route path="/profile" element={<ProfileContainer />} />
-                        <Route path="/dialogs/*" element={< DialogsContainer />} />
+                        <Route path="/dialogs/:userId?" element={< DialogsContainer />} />
                         <Route path="/news" element={< News />} />
                         <Route path="/music" element={< Music />} />
                         <Route path="/settings" element={< Settings />} />
                         <Route path="/friends/*" element={< MySidebarContainer />} />
                         <Route path="/login" element={< LoginContainer />} />
+                        <Route path="/confirm/:token" element={<Confirm />} />
 
                         {/* <Route path = "/users/:userId?" element = { < ProfileContainer/> }/>   */}
                         <Route path="/users/:userId" element={<ProfileContainer />} />
