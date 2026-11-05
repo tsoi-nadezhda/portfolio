@@ -14,9 +14,6 @@ function loadEnvFile(file) {
 
 const envPath = path.join(__dirname, "..", ".env");
 
-console.log("ENV path:", envPath);
-console.log("ENV exists:", fs.existsSync(envPath));
-
 loadEnvFile(envPath);
 
 const env = process.env;
@@ -45,4 +42,5 @@ module.exports = {
     SMTP_USER: env.SMTP_USER || "",
     SMTP_PASS: env.SMTP_PASS || "",
     MAIL_FROM: env.MAIL_FROM || env.SMTP_USER || "Social <noreply@localhost>",
+    JAMENDO_CLIENT_ID: env.JAMENDO_CLIENT_ID || "",
 };

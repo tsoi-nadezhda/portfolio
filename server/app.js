@@ -31,6 +31,7 @@ app.use(
 const API = "/api/1.0";
 app.use(`${API}/auth`, require("./routes/auth"));
 app.use(`${API}/dialogs`, require("./routes/dialogs"));
+app.use(`${API}/music`, require("./routes/music"));
 app.use(`${API}/profile`, require("./routes/posts"));
 app.use(`${API}/profile`, require("./routes/profile"));
 app.use(API, require("./routes/users"));

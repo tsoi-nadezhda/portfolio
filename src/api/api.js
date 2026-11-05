@@ -70,6 +70,22 @@ export const dialogsAPI = {
         return instance.delete(`dialogs/messages/${messageId}`)
     }
 }
+export const musicAPI = {
+    getTracks(search = "", offset = 0) {
+        const query = new URLSearchParams({ offset: String(offset) })
+        if (search) query.set("search", search)
+        return instance.get(`music/tracks?${query}`, { headers: { "Cache-Control": "no-cache" } })
+    },
+    getAlbum() {
+        return instance.get("music/album")
+    },
+    saveTrack(track) {
+        return instance.post("music/album", track)
+    },
+    removeTrack(trackId) {
+        return instance.delete(`music/album/${trackId}`)
+    }
+}
 export const authAPI = {
     logIn(email, password, rememberMe) {
         return instance.post(`auth/login`, {

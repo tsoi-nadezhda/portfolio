@@ -6,5 +6,6 @@ module.exports = {
     ...require("./profiles"),
     ...require("./posts"),
     ...require("./messages"),
+    ...require("./music"),
     ...require("./auth"),
 };
