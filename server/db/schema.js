@@ -90,6 +90,21 @@ async function initSchema() {
     `);
     await pool.query("ALTER TABLE email_confirmations ADD COLUMN IF NOT EXISTS attempts INTEGER NOT NULL DEFAULT 0");
     await pool.query("ALTER TABLE messages ADD COLUMN IF NOT EXISTS viewed BOOLEAN NOT NULL DEFAULT FALSE");
+    await pool.query(`
+        CREATE TABLE IF NOT EXISTS album_tracks (
+            user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+            track_id TEXT NOT NULL,
+            name TEXT NOT NULL,
+            artist TEXT NOT NULL,
+            album TEXT NOT NULL DEFAULT '',
+            image TEXT NOT NULL DEFAULT '',
+            audio TEXT NOT NULL,
+            duration INTEGER NOT NULL DEFAULT 0,
+            share_url TEXT NOT NULL DEFAULT '',
+            saved_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            PRIMARY KEY (user_id, track_id)
+        );
+    `);
     await pool.query("ALTER TABLE sessions ADD COLUMN IF NOT EXISTS expires_at TIMESTAMPTZ");
     await pool.query(
         "UPDATE sessions SET expires_at = NOW() + make_interval(hours => $1) WHERE expires_at IS NULL",
