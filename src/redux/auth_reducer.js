@@ -60,13 +60,14 @@ export const confirmToken = (token) => (dispatch) => {
    })
 }
 export const logOut = () => (dispatch) => {
-   authAPI.logOut().then((response) => {
-      // debugger
+   return authAPI.logOut().then((response) => {
       if (response.data.resultCode === 0) {
          dispatch(unsetAuthUserData({}))
          dispatch(setCurrentUserId(null))
+         return true
       }
-   })
+      return false
+   }).catch(() => false)
 }
 export const getAuthUserData = () => (dispatch) => {
    return authAPI.me().then((response) => {
