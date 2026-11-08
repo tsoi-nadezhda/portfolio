@@ -3,7 +3,7 @@ const config = require("../config");
 const db = require("../db");
 const { sendConfirmation } = require("../mail");
 const rateLimit = require("../rateLimit");
-const { loadUser, requireAuth } = require("../middleware/auth");
+const { loadUser, requireAuth, readSessionId } = require("../middleware/auth");
 const { ok, fail, wrap, text, createRouter } = require("../http");
 
 const router = createRouter();
@@ -26,6 +26,11 @@ const resendEmailLimiter = rateLimit({
 
 // Создаёт код и токен подтверждения и отправляет письмо.
 // Если письмо не ушло, аккаунт и код остаются, письмо можно запросить повторно через /auth/resend.
+function confirmationLink(token) {
+  const url = new URL(config.FRONTEND_URL);
+  url.hash = `/confirm/${encodeURIComponent(token)}`;
+  return url.href;
+}
 async function issueConfirmation(account) {
   const code = String(crypto.randomInt(100000, 1000000));
   const token = crypto.randomBytes(32).toString("hex");
@@ -34,23 +39,27 @@ async function issueConfirmation(account) {
     to: account.email,
     name: account.name,
     code,
-    link: new URL(`/confirm/${token}`, config.FRONTEND_URL).href,
+    link: confirmationLink(token),
   });
 }
 
+const sessionCookie = {
+  httpOnly: true,
+  sameSite: "none",
+  secure: true,
+  path: "/",
+};
+
 // Создаёт сессию в БД и выставляет cookie с тем же сроком жизни.
+// Возвращает id сессии: клиент сохраняет его сам, если браузер отклонил cookie.
 async function beginSession(res, userId, rememberMe) {
   const sessionId = crypto.randomUUID();
   const ttlMs = rememberMe
     ? config.SESSION_REMEMBER_DAYS * 24 * 60 * 60 * 1000
     : config.SESSION_TTL_HOURS * 60 * 60 * 1000;
   await db.createSession(sessionId, userId, ttlMs);
-  res.cookie("sessionId", sessionId, {
-    httpOnly: true,
-    sameSite: "lax",
-    path: "/",
-    maxAge: ttlMs,
-  });
+  res.cookie("sessionId", sessionId, { ...sessionCookie, maxAge: ttlMs });
+  return sessionId;
 }
 
 router.get(
@@ -109,8 +118,8 @@ router.post(
     const code = text(req.body && req.body.code, 12);
     const account = await db.confirmByCode(emailKey(req), code);
     if (!account) return res.json(fail("The code is wrong or expired"));
-    await beginSession(res, account.id, true);
-    res.json(ok({ userId: account.id }));
+    const token = await beginSession(res, account.id, true);
+    res.json(ok({ userId: account.id, token }));
   }),
 );
 
@@ -121,8 +130,8 @@ router.post(
     const account = await db.confirmByToken(req.params.token);
     if (!account)
       return res.json(fail("This confirmation link is invalid or expired"));
-    await beginSession(res, account.id, true);
-    res.json(ok({ userId: account.id }));
+    const token = await beginSession(res, account.id, true);
+    res.json(ok({ userId: account.id, token }));
   }),
 );
 
@@ -140,16 +149,16 @@ router.post(
     if (!account) return res.json(fail("Incorrect email or password"));
     if (!account.emailVerified)
       return res.json(fail("Confirm your email before signing in"));
-    await beginSession(res, account.id, rememberMe);
-    res.json(ok({ userId: account.id }));
+    const token = await beginSession(res, account.id, rememberMe);
+    res.json(ok({ userId: account.id, token }));
   }),
 );
 
 router.delete(
   "/login",
   wrap(async (req, res) => {
-    await db.deleteSession(req.cookies.sessionId);
-    res.clearCookie("sessionId", { path: "/" });
+    await db.deleteSession(readSessionId(req));
+    res.clearCookie("sessionId", sessionCookie);
     res.json(ok());
   }),
 );

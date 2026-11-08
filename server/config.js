@@ -20,9 +20,9 @@ const env = process.env;
 
 module.exports = {
     PORT: Number(env.API_PORT) || 3001,
-    FRONTEND_URL: env.FRONTEND_URL || "http://localhost:3000",
+    FRONTEND_URL: env.FRONTEND_URL || "https://tsoi-nadezhda.github.io/portfolio",
     // Разрешённые источники запросов (через запятую).
-    ALLOWED_ORIGINS: (env.ALLOWED_ORIGINS || "http://127.0.0.1:3000,http://localhost:3000")
+    ALLOWED_ORIGINS: (env.ALLOWED_ORIGINS || "http://127.0.0.1:3000,http://localhost:3000,https://tsoi-nadezhda.github.io")
         .split(",")
         .map((origin) => origin.trim())
         .filter(Boolean),

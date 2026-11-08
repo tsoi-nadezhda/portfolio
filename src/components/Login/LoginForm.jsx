@@ -9,17 +9,17 @@ const LoginForm = (props) => {
             <h1>{props.isSignUp ? "Create account" : "Sign in"}</h1>
             {props.isSignUp ? <div className={s.inputField}>
                 <label>Name</label>
-                <input type="text" {...register('name', { required: "Name is required" })} />
+                <input type="text" autoComplete="name" {...register('name', { required: "Name is required" })} />
                 {errors.name ? <span>{errors.name.message}</span> : null}
             </div> : null}
             <div className={s.inputField}>
                 <label>Email</label>
-                <input type="email" {...register('email', { required: "Email is required" })} />
+                <input type="email" autoComplete="email" inputMode="email" {...register('email', { required: "Email is required" })} />
                 {errors.email ? <span>{errors.email.message}</span> : null}
             </div>
             <div className={s.inputField}>
                 <label>Password</label>
-                <input type="password" {...register('password', {
+                <input type="password" autoComplete={props.isSignUp ? "new-password" : "current-password"} {...register('password', {
                     required: "Password is required",
                     minLength: props.isSignUp ? { value: 4, message: "Password must be at least 4 characters" } : undefined
                 })} />

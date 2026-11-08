@@ -1,11 +1,47 @@
 import axios from "axios"
-const apiHost = typeof window !== "undefined" ? window.location.hostname : "127.0.0.1"
+const TOKEN_KEY = "sessionToken"
 const instance = axios.create({
     withCredentials: true,
-    baseURL: process.env.REACT_APP_API_URL || `http://${apiHost}:3001/api/1.0/`,
+    baseURL: process.env.REACT_APP_API_URL || "https://tsoi.duckdns.org/api/1.0/",
     headers: {
         "API-KEY": "6b1237c0-7db9-405d-9c62-5d1c76007f2f"
     }
+})
+
+function storage() {
+    try {
+        return window.localStorage && window.sessionStorage ? window : null
+    } catch (error) {
+        return null
+    }
+}
+
+export const sessionToken = {
+    read() {
+        const store = storage()
+        if (!store) return ""
+        return store.localStorage.getItem(TOKEN_KEY) || store.sessionStorage.getItem(TOKEN_KEY) || ""
+    },
+    save(token, rememberMe) {
+        const store = storage()
+        if (!store || !token) return
+        store.localStorage.removeItem(TOKEN_KEY)
+        store.sessionStorage.removeItem(TOKEN_KEY)
+        const target = rememberMe ? store.localStorage : store.sessionStorage
+        target.setItem(TOKEN_KEY, token)
+    },
+    clear() {
+        const store = storage()
+        if (!store) return
+        store.localStorage.removeItem(TOKEN_KEY)
+        store.sessionStorage.removeItem(TOKEN_KEY)
+    }
+}
+
+instance.interceptors.request.use((config) => {
+    const token = sessionToken.read()
+    if (token) config.headers.Authorization = `Bearer ${token}`
+    return config
 })
 export const usersAPI = {
     getUsers(limit = 10, currentPage = 1) {
