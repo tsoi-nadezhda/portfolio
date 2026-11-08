@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import HeaderContainer from './components/Header/HeaderContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
@@ -15,6 +15,7 @@ import Confirm from './components/Login/Confirm';
 import { connect } from 'react-redux';
 import { initialize } from './redux/app_reducer';
 import Spinner from "./components/Spinner/Spinner"
+
 // const WrappedDialogs = function(props) {
 //     // Конструкция "{...props}" нужна, чтобы не потерять
 //     // параметры, переданные от компонента Route

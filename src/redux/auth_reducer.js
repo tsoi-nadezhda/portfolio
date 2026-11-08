@@ -1,4 +1,4 @@
-import { authAPI } from "../api/api"
+import { authAPI, sessionToken } from "../api/api"
 import { setCurrentUserId } from "./users_reducer"
 const SET_USER_DATA = "SET_USER_DATA";
 const UNSET_USER_DATA = "UNSET_USER_DATA";
@@ -9,11 +9,29 @@ export const unsetAuthUserData = () => ({ type: UNSET_USER_DATA, data: {} });
 export const clearAuthError = () => ({ type: SET_AUTH_ERROR, error: null });
 export const clearPendingEmail = () => ({ type: SET_PENDING_EMAIL, email: null });
 const authError = (response) => (response.data.messages && response.data.messages[0]) || "Something went wrong"
+export const getAuthUserData = () => (dispatch) => {
+   return authAPI.me().then((response) => {
+      if (response.data.resultCode === 0) {
+         let { email, id, login, name } = { ...response.data.data }
+         dispatch(setAuthUserData(id, email, login, name))
+         return true
+      }
+      return false
+   })
+}
+const keepSession = (dispatch, response, rememberMe) => {
+   sessionToken.save(response.data.data && response.data.data.token, rememberMe)
+   return dispatch(getAuthUserData()).then((signedIn) => {
+      if (!signedIn) {
+         dispatch({ type: SET_AUTH_ERROR, error: "Cannot keep the session on this device" })
+      }
+   })
+}
 export const logIn = (email, password, rememberMe) => (dispatch) => {
    dispatch({ type: SET_AUTH_ERROR, error: null })
    return authAPI.logIn(email, password, rememberMe).then((response) => {
       if (response.data.resultCode === 0) {
-         return dispatch(getAuthUserData())
+         return keepSession(dispatch, response, rememberMe)
       }
       dispatch({ type: SET_AUTH_ERROR, error: authError(response) })
    }).catch(() => {
@@ -41,7 +59,7 @@ export const confirmEmail = (email, code) => (dispatch) => {
    return authAPI.confirmEmail(email, code).then((response) => {
       if (response.data.resultCode === 0) {
          dispatch({ type: SET_PENDING_EMAIL, email: null })
-         return dispatch(getAuthUserData())
+         return keepSession(dispatch, response, true)
       }
       dispatch({ type: SET_AUTH_ERROR, error: authError(response) })
    }).catch(() => {
@@ -52,31 +70,36 @@ export const confirmToken = (token) => (dispatch) => {
    dispatch({ type: SET_AUTH_ERROR, error: null })
    return authAPI.confirmToken(token).then((response) => {
       if (response.data.resultCode === 0) {
-         return dispatch(getAuthUserData())
+         return keepSession(dispatch, response, true)
       }
       dispatch({ type: SET_AUTH_ERROR, error: authError(response) })
    }).catch(() => {
       dispatch({ type: SET_AUTH_ERROR, error: "Cannot reach the server" })
    })
 }
-export const logOut = () => (dispatch) => {
-   return authAPI.logOut().then((response) => {
-      if (response.data.resultCode === 0) {
-         dispatch(unsetAuthUserData({}))
-         dispatch(setCurrentUserId(null))
-         return true
+export const logOut = () => async (dispatch) => {
+   try {
+      const response = await authAPI.logOut()
+
+      if (response.data.resultCode !== 0) {
+         dispatch({
+            type: SET_AUTH_ERROR,
+            error: authError(response)
+         })
+         return false
       }
+
+      sessionToken.clear()
+      dispatch(unsetAuthUserData())
+      dispatch(setCurrentUserId(null))
+      return true
+   } catch {
+      dispatch({
+         type: SET_AUTH_ERROR,
+         error: "Не удалось выйти. Попробуйте ещё раз."
+      })
       return false
-   }).catch(() => false)
-}
-export const getAuthUserData = () => (dispatch) => {
-   return authAPI.me().then((response) => {
-      // debugger
-      if (response.data.resultCode === 0) {
-         let { email, id, login, name } = { ...response.data.data }
-         dispatch(setAuthUserData(id, email, login, name))
-      }
-   })
+   }
 }
 let initialState = {
    userId: null,

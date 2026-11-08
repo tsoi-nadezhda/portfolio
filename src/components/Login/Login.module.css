@@ -67,3 +67,19 @@
 .switchMode:hover {
     background: #f4e9f8;
 }
+
+@media (max-width: 800px) {
+    .loginForm {
+        min-height: 0;
+        align-items: stretch;
+        padding: 8px 0 24px;
+    }
+
+    .loginForm > form {
+        padding: 24px 20px;
+    }
+
+    .loginForm input {
+        font-size: 16px;
+    }
+}
