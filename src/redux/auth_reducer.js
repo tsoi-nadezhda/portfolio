@@ -86,17 +86,19 @@ export const logOut = () => async (dispatch) => {
             type: SET_AUTH_ERROR,
             error: authError(response)
          })
-         return
+         return false
       }
 
       sessionToken.clear()
       dispatch(unsetAuthUserData())
       dispatch(setCurrentUserId(null))
+      return true
    } catch {
       dispatch({
          type: SET_AUTH_ERROR,
          error: "Не удалось выйти. Попробуйте ещё раз."
       })
+      return false
    }
 }
 let initialState = {
