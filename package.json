@@ -21,10 +21,12 @@
     "web-vitals": "^3.5.2"
   },
   "scripts": {
-    "start": "node scripts/dev-start.js",
+    "start": "node scripts/dev-start.js local",
+    "start:pages": "node scripts/dev-start.js pages",
     "api": "node server/index.js",
-    "dev": "node scripts/dev.js",
-    "build": "react-scripts build",
+    "dev": "node scripts/dev.js local",
+    "dev:pages": "node scripts/dev.js pages",
+    "build": "node scripts/build.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",

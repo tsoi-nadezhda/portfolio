@@ -7,6 +7,12 @@ const SET_ALBUM = "SET_ALBUM"
 const ADD_ALBUM_TRACK = "ADD_ALBUM_TRACK"
 const REMOVE_ALBUM_TRACK = "REMOVE_ALBUM_TRACK"
 const SET_SAVING = "SET_SAVING"
+const SET_PLAYBACK = "SET_PLAYBACK"
+
+export const playTrack = (track) => ({ type: SET_PLAYBACK, track, mode: "playing" })
+export const pausePlayback = () => ({ type: SET_PLAYBACK, mode: "paused" })
+export const stopPlayback = () => ({ type: SET_PLAYBACK, mode: "stopped" })
+export const playbackEnded = () => ({ type: SET_PLAYBACK, mode: "stopped" })
 
 let requestId = 0
 const musicError = (response) => (response.data.messages && response.data.messages[0]) || "Something went wrong"
@@ -81,7 +87,9 @@ const initialState = {
     isLoading: false,
     error: null,
     album: [],
-    savingId: null
+    savingId: null,
+    current: null,
+    mode: "stopped"
 }
 
 const musicReducer = (state = initialState, action) => {
@@ -109,6 +117,12 @@ const musicReducer = (state = initialState, action) => {
             return { ...state, album: state.album.filter((track) => track.id !== action.trackId) }
         case SET_SAVING:
             return { ...state, savingId: action.savingId }
+        case SET_PLAYBACK:
+            return {
+                ...state,
+                current: action.track === undefined ? state.current : action.track,
+                mode: action.mode
+            }
         default:
             return state
     }

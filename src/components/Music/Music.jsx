@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { connect } from "react-redux"
-import { getAlbum, getTracks, removeTrack, saveTrack } from "../../redux/music_reducer"
+import { getAlbum, getTracks, pausePlayback, playTrack, removeTrack, saveTrack, stopPlayback } from "../../redux/music_reducer"
 import s from "./Music.module.css"
 
 const PlayIcon = () => (
@@ -34,38 +34,16 @@ const formatTime = (seconds) => {
 }
 
 const Music = (props) => {
-    const audioRef = useRef(null)
-    const loadedId = useRef(null)
     const [query, setQuery] = useState("")
     const [tab, setTab] = useState("catalog")
-    const [currentId, setCurrentId] = useState(null)
-    const [mode, setMode] = useState("stopped")
     const savedIds = new Set(props.album.map((track) => track.id))
-    const current = [...props.album, ...props.tracks].find((track) => track.id === currentId) || null
+    const current = props.current
+    const currentId = current && current.id
+    const mode = props.mode
 
-    const play = (track) => {
-        const audio = audioRef.current
-        if (!audio) return
-        if (loadedId.current !== track.id) {
-            audio.src = track.audio
-            loadedId.current = track.id
-        }
-        setCurrentId(track.id)
-        setMode("playing")
-        audio.play().catch(() => setMode("paused"))
-    }
-    const pause = () => {
-        if (audioRef.current) audioRef.current.pause()
-        setMode("paused")
-    }
-    const stop = () => {
-        const audio = audioRef.current
-        if (audio) {
-            audio.pause()
-            audio.currentTime = 0
-        }
-        setMode("stopped")
-    }
+    const play = (track) => props.playTrack(track)
+    const pause = () => props.pausePlayback()
+    const stop = () => props.stopPlayback()
 
     const playback = (track) => {
         const playing = track.id === currentId && mode === "playing"
@@ -120,7 +98,6 @@ const Music = (props) => {
                 onClick={() => setTab("mine")}
             >My music{props.album.length ? ` (${props.album.length})` : ""}</button>
         </div>
-        <audio ref={audioRef} onEnded={() => setMode("stopped")} />
         {current ? <div className={s.now}>
             {current.image ? <img src={current.image} alt="" /> : <span className={s.cover} />}
             <div className={s.meta}>
@@ -189,7 +166,9 @@ const mapStateToProps = (state) => ({
     isLoading: state.musicPage.isLoading,
     error: state.musicPage.error,
     album: state.musicPage.album,
-    savingId: state.musicPage.savingId
+    savingId: state.musicPage.savingId,
+    current: state.musicPage.current,
+    mode: state.musicPage.mode
 })
 
-export default connect(mapStateToProps, { getTracks, getAlbum, saveTrack, removeTrack })(MusicContainer)
+export default connect(mapStateToProps, { getTracks, getAlbum, saveTrack, removeTrack, playTrack, pausePlayback, stopPlayback })(MusicContainer)

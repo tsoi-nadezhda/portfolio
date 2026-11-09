@@ -17,8 +17,8 @@
 @media (max-width: 800px) {
   .app-wrapper {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr;
-    grid-template-areas: "h" "n" "c";
+    grid-template-rows: 64px 1fr;
+    grid-template-areas: "h" "c";
   }
 
   .app-wrapper-content {
