@@ -5,6 +5,7 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Music from './components/Music/Music';
+import Player from './components/Music/Player';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import MySidebarContainer from './components/Sidebar/MySidebarContainer';
@@ -38,6 +39,7 @@ class App extends React.Component {
                 <NavbarContainer />
 
                 <div className="app-wrapper-content">
+                    <Player />
                     <Routes>
                         <Route path="/profile" element={<ProfileContainer />} />
                         <Route path="/dialogs/:userId?" element={< DialogsContainer />} />
