@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import s from "./Dialogs.module.css"
 import DialogItem from "./DialogItem/DialogItem"
 import Message from "./Message/Message"
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 
 const Dialogs = (props) => {
     const params = useParams()
@@ -34,15 +34,16 @@ const Dialogs = (props) => {
     const chatUser = props.state.chatUser
     return (
         <div>
-            <div className={s.dialogs}>
+            <div className={userId ? `${s.dialogs} ${s.chatOpen}` : s.dialogs}>
                 <div className={s.dialogs_items}>
                     {props.state.dialogsData.length
                         ? props.state.dialogsData.map(d => <DialogItem key={d.id} id={d.id} name={d.name} lastMessage={d.lastMessage}></DialogItem>)
                         : <div className={s.empty}>No dialogs yet</div>}
                 </div>
                 <div className={s.messages}>
-                    {userId && chatUser ? <div className={s.chatHeader}>
-                        <div className={s.chatName}>{chatUser.name}</div>
+                    {userId ? <div className={s.chatHeader}>
+                        <NavLink className={s.back} end to="/dialogs">Dialogs</NavLink>
+                        {chatUser ? <div className={s.chatName}>{chatUser.name}</div> : null}
                     </div> : null}
                     <div className={s.messagesArea} ref={messagesArea}>
                         {userId

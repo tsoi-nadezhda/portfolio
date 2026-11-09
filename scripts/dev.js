@@ -6,8 +6,8 @@ const root = path.join(__dirname, "..");
 const children = [];
 let stopping = false;
 
-function run(name, script) {
-    const child = spawn(process.execPath, [path.join(root, script)], {
+function run(name, script, args = []) {
+    const child = spawn(process.execPath, [path.join(root, script), ...args], {
         cwd: root,
         stdio: ["ignore", "pipe", "pipe"],
         env: process.env,
@@ -41,5 +41,6 @@ function stop(code = 0) {
 process.on("SIGINT", () => stop(0));
 process.on("SIGTERM", () => stop(0));
 
+const mode = process.argv[2] === "pages" ? "pages" : "local";
 run("api", "server/index.js");
-run("web", "scripts/dev-start.js");
+run("web", "scripts/dev-start.js", [mode]);

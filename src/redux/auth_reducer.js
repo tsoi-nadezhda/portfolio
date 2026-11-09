@@ -1,4 +1,5 @@
 import { authAPI, sessionToken } from "../api/api"
+import { stopPlayback } from "./music_reducer"
 import { setCurrentUserId } from "./users_reducer"
 const SET_USER_DATA = "SET_USER_DATA";
 const UNSET_USER_DATA = "UNSET_USER_DATA";
@@ -78,6 +79,7 @@ export const confirmToken = (token) => (dispatch) => {
    })
 }
 export const logOut = () => async (dispatch) => {
+   dispatch(stopPlayback())
    try {
       const response = await authAPI.logOut()
 
